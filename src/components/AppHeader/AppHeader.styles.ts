@@ -2,20 +2,19 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    width: '20%',
+    width: '100%',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: '#F08080',
-    opacity: 0.8,
-    borderRadius: 20,
+    backgroundColor: 'rgba(173, 216, 230, 0.5)',
   },
   title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: 'black',
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#1e293b',
     textAlign: 'center',
+    marginVertical: 12,
+    fontFamily: 'System',
+    letterSpacing: 0.3,
   },
 });

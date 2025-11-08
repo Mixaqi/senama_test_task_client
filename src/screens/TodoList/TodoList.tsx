@@ -1,6 +1,6 @@
 import { List, WhiteSpace } from '@ant-design/react-native';
 import React, { useEffect, useState } from 'react';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { TodoInput } from '../../components/TodoInput/TodoInput';
 import { TodoItem } from '../../components/TodoItem/TodoItem';
 import { Todo } from '../../interfaces/todo';
@@ -49,7 +49,7 @@ export default function TodoList() {
       await editTodo(id, title);
       setTodos((prev) => prev.map((t) => (t._id === id ? { ...t, title } : t)));
     } catch {
-      Alert.alert('Error', 'Could not edit todo');
+      console.error('Error', 'Could not edit todo');
     }
   };
 
@@ -60,7 +60,7 @@ export default function TodoList() {
         prev.map((t) => (t._id === id ? { ...t, isCompleted: !t.isCompleted } : t))
       );
     } catch {
-      Alert.alert('Error', 'Could not toggle todo');
+      console.error('Error', 'Could not toggle todo');
     }
   };
 

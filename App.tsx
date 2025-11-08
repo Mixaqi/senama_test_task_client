@@ -1,16 +1,14 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
-import { styles } from './App.styles';
+import { ScrollView } from 'react-native';
 import { AppHeader } from './src/components/AppHeader/AppHeader';
 import TodoList from './src/screens/TodoList/TodoList';
+import { styles } from './App.styles';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.content}>
+    <ScrollView style={styles.container}>
       <AppHeader />
       <TodoList />
-      </ScrollView>
-    </View>
+    </ScrollView>
   );
 }

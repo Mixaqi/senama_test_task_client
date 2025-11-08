@@ -1,7 +1,8 @@
-import { Button, List, Input } from '@ant-design/react-native';
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, TextInput, Modal } from 'react-native';
+import { Button, List, Text } from '@ant-design/react-native';
 import { Todo } from '../../interfaces/todo';
+import { styles } from './TodoItem.styles';
 
 interface Props {
   todo: Todo;
@@ -15,64 +16,72 @@ export const TodoItem: React.FC<Props> = ({ todo, onToggle, onDelete, onEdit }) 
   const [draftTitle, setDraftTitle] = useState(todo.title);
 
   return (
-    <List.Item
-      key={todo._id}
-      extra={
-        <View style={{ flexDirection: 'row', pointerEvents: 'auto' }}>
-          <Button
-            size="small"
-            type="ghost"
-            onPress={() => onToggle(todo._id)}
-            style={{ marginRight: 6 }}
-          >
-            {todo.isCompleted ? 'Undo' : 'Done'}
-          </Button>
+    <>
+      <List.Item>
+        <View style={styles.container}>
+          <Text style={styles.todoText}>{todo.title}</Text>
 
-          {isEditing ? (
-            <>
-              <Input value={draftTitle} onChangeText={setDraftTitle} />
-              <Button
-                size="small"
-                type="primary"
-                onPress={() => {
-                  if (draftTitle.trim() !== '') {
-                    onEdit(todo._id, draftTitle);
-                  }
-                  setIsEditing(false);
-                }}
-                style={{ marginRight: 6 }}
-              >
-                Save
-              </Button>
-              <Button
-                size="small"
-                type="warning"
-                onPress={() => {
-                  setDraftTitle(todo.title);
-                  setIsEditing(false);
-                }}
-              >
-                Cancel
-              </Button>
-            </>
-          ) : (
+          <View style={styles.buttonsGroup}>
+            <Button
+              size="small"
+              type={todo.isCompleted ? 'primary' : 'ghost'}
+              style={[styles.button, todo.isCompleted && styles.undoButton]}
+              onPress={() => onToggle(todo._id)}
+            >
+              {todo.isCompleted ? 'Undo' : 'Done'}
+            </Button>
             <Button
               size="small"
               type="primary"
+              style={styles.button}
               onPress={() => setIsEditing(true)}
-              style={{ marginRight: 6 }}
             >
               Edit
             </Button>
-          )}
-
-          <Button size="small" type="warning" onPress={() => onDelete(todo._id)}>
-            Delete
-          </Button>
+            <Button
+              size="small"
+              type="warning"
+              style={styles.button}
+              onPress={() => onDelete(todo._id)}
+            >
+              Delete
+            </Button>
+          </View>
         </View>
-      }
-    >
-      {isEditing ? null : todo.title}
-    </List.Item>
+      </List.Item>
+
+      <Modal
+        visible={isEditing}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setIsEditing(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <TextInput
+              value={draftTitle}
+              onChangeText={setDraftTitle}
+              style={styles.input}
+              autoFocus
+            />
+            <Button
+              type="primary"
+              onPress={() => {
+                if (draftTitle.trim() !== '') {
+                  onEdit(todo._id, draftTitle);
+                }
+                setIsEditing(false);
+              }}
+              style={{ marginBottom: 10 }}
+            >
+              Save
+            </Button>
+            <Button type="ghost" onPress={() => setIsEditing(false)}>
+              Cancel
+            </Button>
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };

@@ -1,6 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Button, Input } from '@ant-design/react-native';
+import { Button } from '@ant-design/react-native';
+import { TextInput } from 'react-native';
+import styles from './TodoInput.styles';
 
 interface Props {
   value: string;
@@ -9,36 +11,12 @@ interface Props {
 }
 
 export const TodoInput: React.FC<Props> = ({ value, onChange, onSubmit }) => (
-  <View
-    style={{
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: 8,
-    }}
-  >
-    <Input
-      value={value}
-      onChangeText={onChange}
-      style={{
-        flex: 1,
-        marginRight: 6,
-        borderRadius: 8,
-        paddingHorizontal: 2,
-        backgroundColor: 'white',
-        height: '80%',
-      }}
-    />
-    <Button
-      type="primary"
-      onPress={onSubmit}
-      style={{
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 8,
-        height: '80%',
-      }}
-    >
+  <View style={styles.container}>
+    <TextInput value={value} onChangeText={onChange} style={styles.input} />
+    <Button type="primary" onPress={onSubmit} style={styles.button}>
       Add
     </Button>
   </View>
 );
+
+export default TodoInput;
